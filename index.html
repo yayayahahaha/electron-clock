@@ -22,6 +22,11 @@
         <span>Electron Version: </span>
         <span id="electron"></span>
     </p>
+
+    <br>
+
+    <div class="current-time"></div>
+    <input type="text" class="alarm-time">
 </body>
 <script>
     var nodeDom = document.querySelector('#node'),
@@ -31,7 +36,8 @@
     nodeDom.innerText = process.versions.node;
     chromeDom.innerText = process.versions.chrome;
     electronDom.innerText = process.versions.electron;
-
 </script>
+
+<script src="app.js"></script>
 
 </html>
