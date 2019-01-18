@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, height=device-height, initial-scale=1.0'>
+    <title>Try Me!</title>
+</head>
+
+<body>
+    <h1>Hello FlyC</h1>
+    <p>
+        <span>Node Version: </span>
+        <span id="node"></span>
+    </p>
+    <p>
+        <span>Chrome Version: </span>
+        <span id="chrome"></span>
+    </p>
+    <p>
+        <span>Electron Version: </span>
+        <span id="electron"></span>
+    </p>
+</body>
+<script>
+    var nodeDom = document.querySelector('#node'),
+        chromeDom = document.querySelector('#chrome'),
+        electronDom = document.querySelector('#electron');
+
+    nodeDom.innerText = process.versions.node;
+    chromeDom.innerText = process.versions.chrome;
+    electronDom.innerText = process.versions.electron;
+
+</script>
+
+</html>
