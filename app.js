@@ -14,3 +14,16 @@ var timmer = setInterval(function() {
     const time = moment().format('HH:mm:ss')
     nowDom.innerText = time
 }, 300);
+
+/* ============================================================== */
+
+const notifier = require('node-notifier')
+const path = require('path')
+
+function notice(msg) {
+    notifier.notify({
+        title: '哈囉是我',
+        message: msg,
+        sound: false
+    });
+}
