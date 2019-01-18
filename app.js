@@ -1,4 +1,5 @@
 const moment = require('moment')
+const fs = require('fs')
 
 const nowDom = document.querySelector('.current-time')
 const alarmDom = document.querySelector('.alarm-time')
@@ -15,7 +16,15 @@ var timmer = setInterval(function() {
     nowDom.innerText = time
 }, 300);
 
+const db = fs.readFileSync('db.json')
+let json = JSON.parse(db)
+json.hello = 'there'
+
+fs.writeFileSync('db.json', JSON.stringify(json, null, 2))
+
+
 /* ============================================================== */
+// notification
 
 const notifier = require('node-notifier')
 const path = require('path')
