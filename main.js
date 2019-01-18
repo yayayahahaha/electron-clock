@@ -24,7 +24,7 @@ app.on('activate', () => {
 function createWindow() {
     // create the browser window
     win = new BrowserWindow({
-        width: 400,
+        width: 600,
         height: 400,
         maximizable: false
     })
@@ -36,7 +36,7 @@ function createWindow() {
     }))
 
     // open devtools
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     // when window close
     win.on('closed', () => {
