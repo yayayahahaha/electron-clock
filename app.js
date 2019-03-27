@@ -1,6 +1,19 @@
 const fs = require('fs')
 const axios = require('axios')
 
+const vm = new Vue({
+    el: '#app',
+    data: {
+        message: ''
+    }
+})
+
+
+
+
+
+
+
 /* ============================================================== */
 // notification
 

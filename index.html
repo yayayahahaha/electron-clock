@@ -14,11 +14,13 @@
 <body>
     <div id="app">
         <div class="header">
-            <input type="text">
+            <input type="text" v-model="message">
         </div>
 
         <div class="container">
-            <div class="content"></div>
+            <div class="content">
+                <p v-text="message"></p>
+            </div>
         </div>
 
     </div>
