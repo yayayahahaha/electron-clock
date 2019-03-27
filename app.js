@@ -61,9 +61,8 @@ const vm = new Vue({
                 })
                 .flattenDepth(1)
                 .value();
-            console.log(allImagesId);
 
-            // getAllImageUrl(allImagesId);
+            this.getAllImageUrl(allImagesId);
 
             function _createReturnFunction(page) {
                 var url = baseUrl + '/search.php?search=' + keyword + '&page=' + page
@@ -84,6 +83,46 @@ const vm = new Vue({
                         console.error(error);
                     });
                 }
+            }
+
+        },
+        async getAllImageUrl(allImagesId) {
+            var baseUrl = this.baseUrl,
+                taskArray = [],
+                task_search = null;
+
+            allImagesId.forEach(function(image_id) {
+                taskArray.push(_createReturnFunction(image_id));
+            });
+            task_search = new TaskSystem(taskArray, 32);
+
+            console.log('');
+            var response = await task_search.doPromise(),
+                allImagesSrc = _.chain(response)
+                .map(function(item) {
+                    return item.data;
+                })
+                .flattenDepth(1)
+                .value();
+
+            console.log(allImagesSrc);
+            // startDownLoad(allImagesSrc);
+
+            function _createReturnFunction(image_id) {
+                var url = baseUrl + '/big.php?i=' + image_id;
+                return function() {
+                    return axios({
+                        method: 'get',
+                        url: url
+                    }).then(function(res) {
+                        var data = res.data,
+                            $ = cheerio.load(data),
+                            src = $('div.center.img-container-desktop a').attr('href');
+                        return src;
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                };
             }
 
         }
