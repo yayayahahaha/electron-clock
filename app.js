@@ -105,7 +105,7 @@ const vm = new Vue({
                 .flattenDepth(1)
                 .value();
 
-            console.log(allImagesSrc);
+            this.imageList = [...allImagesSrc];
             // startDownLoad(allImagesSrc);
 
             function _createReturnFunction(image_id) {
@@ -126,13 +126,6 @@ const vm = new Vue({
             }
 
         }
-    },
-    mounted() {
-        this.imageList = new Array(10).fill().map((number, index) => {
-            return {
-                name: index + 1
-            }
-        })
     }
 })
 
