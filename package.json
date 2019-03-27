@@ -19,6 +19,7 @@
     "electron": "^4.0.1",
     "gulp": "^4.0.0",
     "gulp-sass": "^4.0.2",
+    "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "node-notifier": "^5.3.0"
   }
