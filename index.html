@@ -20,6 +20,11 @@
         <div class="container">
             <div class="content">
                 <p v-text="message"></p>
+                <ul>
+                    <li v-for="image in imageList">
+                        <p v-text="image.name"></p>
+                    </li>
+                </ul>
             </div>
         </div>
 

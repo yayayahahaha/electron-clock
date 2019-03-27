@@ -4,7 +4,15 @@ const axios = require('axios')
 const vm = new Vue({
     el: '#app',
     data: {
-        message: ''
+        message: '',
+        imageList: []
+    },
+    mounted() {
+        this.imageList = new Array(10).fill().map((number, index) => {
+            return {
+                name: index + 1
+            }
+        })
     }
 })
 
