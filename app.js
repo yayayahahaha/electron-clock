@@ -1,32 +1,48 @@
 const fs = require('fs')
 const axios = require('axios')
+const cheerio = require('cheerio')
 
 const vm = new Vue({
     el: '#app',
     data: {
-        keyword: '',
+        baseUrl: 'https://wall.alphacoders.com',
+        keyword: 'kill la kill',
+        directory: '',
+
+        totalImagesNumber: 0,
+        totalPagesNumber: 0,
+
         imageList: []
     },
     computed: {
-        url() {
-            return `https://find.ruten.com.tw/s/?q=${this.keyword}`
+        getTotalImagesNumberUrl() {
+            return `${this.baseUrl}/search.php?search=${this.keyword}&page=1`
         }
     },
     methods: {
         async search() {
-            const keyword = this.keyword
-            const [data, error] = await axios({
-                method: 'get',
-                url: this.url
-            }).then((res) => {
-                const dom = new DOMParser().parseFromString(res, "text/xml")
-                debugger
-                return [dom, null]
-            }).catch((error) => {
-                return [null, error]
-            })
+            var url = this.getTotalImagesNumberUrl,
+                totalImagesNumber = await axios({
+                    method: 'get',
+                    url: url
+                }).then(function(data) {
+                    var $ = cheerio.load(data.data),
+                        title = $('h1').text(),
+                        totalImagesNumber = title.trim() === '' ? 0 : title.trim().split(' ')[0];
 
-            console.log(data)
+                    return parseInt(totalImagesNumber, 10);
+                }).catch(function(error) {
+                    debugger
+                    console.error(error);
+                });
+            this.totalImagesNumber = totalImagesNumber;
+            this.totalPagesNumber = Math.ceil(totalImagesNumber / 30);
+
+            this.getAllImagesId(this.totalPagesNumber);
+        },
+
+        getAllImagesId(page_number) {
+            console.log(page_number);
         }
     },
     mounted() {
@@ -37,10 +53,6 @@ const vm = new Vue({
         })
     }
 })
-
-
-
-
 
 
 

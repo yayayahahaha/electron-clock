@@ -20,7 +20,8 @@
 
         <div class="container">
             <div class="content">
-                <p v-text="keyword"></p>
+                <p v-text="`總數:${totalImagesNumber}`"></p>
+                <p v-text="`總頁數:${totalPagesNumber}`"></p>
                 <ul>
                     <li v-for="image in imageList">
                         <p v-text="image.name"></p>
