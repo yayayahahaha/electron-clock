@@ -4,8 +4,30 @@ const axios = require('axios')
 const vm = new Vue({
     el: '#app',
     data: {
-        message: '',
+        keyword: '',
         imageList: []
+    },
+    computed: {
+        url() {
+            return `https://find.ruten.com.tw/s/?q=${this.keyword}`
+        }
+    },
+    methods: {
+        async search() {
+            const keyword = this.keyword
+            const [data, error] = await axios({
+                method: 'get',
+                url: this.url
+            }).then((res) => {
+                const dom = new DOMParser().parseFromString(res, "text/xml")
+                debugger
+                return [dom, null]
+            }).catch((error) => {
+                return [null, error]
+            })
+
+            console.log(data)
+        }
     },
     mounted() {
         this.imageList = new Array(10).fill().map((number, index) => {
