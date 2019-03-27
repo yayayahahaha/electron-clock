@@ -1,8 +1,7 @@
 const fs = require('fs')
 const axios = require('axios')
 const cheerio = require('cheerio')
-const _  = require('lodash')
-const TaskSystem = require('flyc-lib/utils/TaskSystem').TaskSystem
+const _ = require('lodash')
 
 const vm = new Vue({
     el: '#app',
@@ -42,8 +41,51 @@ const vm = new Vue({
             this.getAllImagesId(this.totalPagesNumber);
         },
 
-        getAllImagesId(page_number) {
-            console.log(page_number);
+        async getAllImagesId(page_number) {
+            var baseUrl = this.baseUrl,
+                keyword = this.keyword,
+                taskArray = [],
+                task_search = null;
+
+            for (var i = 1; i <= page_number; i++) {
+                taskArray.push(_createReturnFunction(i));
+            }
+            task_search = new TaskSystem(taskArray, 32);
+
+            console.log('');
+            var response = await task_search.doPromise();
+
+            var allImagesId = _.chain(response)
+                .map(function(item) {
+                    return item.data;
+                })
+                .flattenDepth(1)
+                .value();
+            console.log(allImagesId);
+
+            // getAllImageUrl(allImagesId);
+
+            function _createReturnFunction(page) {
+                var url = baseUrl + '/search.php?search=' + keyword + '&page=' + page
+                return function() {
+                    return axios({
+                        method: 'get',
+                        url: url,
+                    }).then(function(data) {
+                        var $ = cheerio.load(data.data),
+                            list = $('.thumb-container-big .boxgrid a'),
+                            returnArray = [];
+                        for (var i = 0; i < list.length; i++) {
+                            returnArray.push($(list[i]).attr('href').split('big.php?i=')[1]);
+                        }
+
+                        return returnArray;
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                }
+            }
+
         }
     },
     mounted() {
@@ -54,7 +96,6 @@ const vm = new Vue({
         })
     }
 })
-
 
 
 /* ============================================================== */
