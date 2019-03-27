@@ -32,7 +32,6 @@ const vm = new Vue({
 
                     return parseInt(totalImagesNumber, 10);
                 }).catch(function(error) {
-                    debugger
                     console.error(error);
                 });
             this.totalImagesNumber = totalImagesNumber;
