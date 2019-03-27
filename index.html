@@ -14,12 +14,13 @@
 <body>
     <div id="app">
         <div class="header">
-            <input type="text" v-model="message">
+            <input type="text" v-model="keyword" @keyup.enter="search">
+            <button @click="search">start</button>
         </div>
 
         <div class="container">
             <div class="content">
-                <p v-text="message"></p>
+                <p v-text="keyword"></p>
                 <ul>
                     <li v-for="image in imageList">
                         <p v-text="image.name"></p>
