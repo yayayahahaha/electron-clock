@@ -1,6 +1,8 @@
 const fs = require('fs')
 const axios = require('axios')
 const cheerio = require('cheerio')
+const _  = require('lodash')
+const TaskSystem = require('flyc-lib/utils/TaskSystem').TaskSystem
 
 const vm = new Vue({
     el: '#app',
