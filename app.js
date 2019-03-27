@@ -1,26 +1,60 @@
-const moment = require('moment')
 const fs = require('fs')
+const axios = require('axios')
+const cheerio = require('cheerio')
+const _  = require('lodash')
+const TaskSystem = require('flyc-lib/utils/TaskSystem').TaskSystem
 
-const nowDom = document.querySelector('.current-time')
-const alarmDom = document.querySelector('.alarm-time')
+const vm = new Vue({
+    el: '#app',
+    data: {
+        baseUrl: 'https://wall.alphacoders.com',
+        keyword: 'kill la kill',
+        directory: '',
 
-// alarmDom.addEventListener('change', onAlarmTextChange)
+        totalImagesNumber: 0,
+        totalPagesNumber: 0,
 
-let time = moment()
+        imageList: []
+    },
+    computed: {
+        getTotalImagesNumberUrl() {
+            return `${this.baseUrl}/search.php?search=${this.keyword}&page=1`
+        }
+    },
+    methods: {
+        async search() {
+            var url = this.getTotalImagesNumberUrl,
+                totalImagesNumber = await axios({
+                    method: 'get',
+                    url: url
+                }).then(function(data) {
+                    var $ = cheerio.load(data.data),
+                        title = $('h1').text(),
+                        totalImagesNumber = title.trim() === '' ? 0 : title.trim().split(' ')[0];
 
-let nowTime
-let alarmTime
+                    return parseInt(totalImagesNumber, 10);
+                }).catch(function(error) {
+                    console.error(error);
+                });
+            this.totalImagesNumber = totalImagesNumber;
+            this.totalPagesNumber = Math.ceil(totalImagesNumber / 30);
 
-var timmer = setInterval(function() {
-    const time = moment().format('HH:mm:ss')
-    nowDom.innerText = time
-}, 300);
+            this.getAllImagesId(this.totalPagesNumber);
+        },
 
-const db = fs.readFileSync('db.json')
-let json = JSON.parse(db)
-json.hello = 'there'
+        getAllImagesId(page_number) {
+            console.log(page_number);
+        }
+    },
+    mounted() {
+        this.imageList = new Array(10).fill().map((number, index) => {
+            return {
+                name: index + 1
+            }
+        })
+    }
+})
 
-fs.writeFileSync('db.json', JSON.stringify(json, null, 2))
 
 
 /* ============================================================== */
