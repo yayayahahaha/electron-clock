@@ -2,6 +2,8 @@ const fs = require('fs')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const _ = require('lodash')
+const flyc = require('npm-flyc')
+const { TaskSystem } = flyc
 
 var contents = fs.readFileSync('./imageArray.json'),
     json = JSON.parse(contents);
