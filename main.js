@@ -1,6 +1,7 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    ipcMain
 } = require('electron')
 
 const path = require('path')
@@ -42,4 +43,15 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
+
+    ipcMain.on('download', (event, arg) => {
+        console.log(event);
+        console.log(typeof event);
+
+        console.log('=====================');
+
+        console.log(arg);
+        console.log(typeof arg);
+    })
+
 }
