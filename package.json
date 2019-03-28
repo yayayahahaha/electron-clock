@@ -21,6 +21,7 @@
     "gulp-sass": "^4.0.2",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
-    "node-notifier": "^5.3.0"
+    "node-notifier": "^5.3.0",
+    "npm-flyc": "^1.0.7"
   }
 }
