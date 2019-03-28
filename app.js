@@ -158,7 +158,10 @@ const vm = new Vue({
         async startDownLoad(allImagesSrc) {
             var url = 'https://images8.alphacoders.com/533/533772.jpg';
             console.log(url);
-            ipcRenderer.send('download');
+            ipcRenderer.send('download', {
+                key: 'value',
+                flyc: 'this is custom argument testing'
+            });
         },
     },
     mounted() {
