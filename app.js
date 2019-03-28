@@ -110,7 +110,7 @@ const vm = new Vue({
             });
             return;
 
-            // for now
+            // TODO: for now
 
             console.log('');
             var response = await task_search.doPromise(),
