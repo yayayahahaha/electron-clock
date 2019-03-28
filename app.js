@@ -9,11 +9,6 @@ const {
     ipcRenderer
 } = require('electron')
 
-// const ipcRenderer // 似乎是electron 的內建東東
-
-var contents = fs.readFileSync('./imageArray.json'),
-    json = JSON.parse(contents);
-
 const vm = new Vue({
     el: '#app',
     data: {
@@ -107,22 +102,6 @@ const vm = new Vue({
             });
             task_search = new TaskSystem(taskArray, 32);
 
-            var response = json;
-            console.log(response);
-
-            this.imageList = [...response].map((url) => {
-                return {
-                    name: url,
-                    url
-                };
-            });
-
-            this.startDownLoad();
-
-            return;
-
-            // TODO: for now
-
             console.log('');
             var response = await task_search.doPromise(),
                 allImagesSrc = _.chain(response)
@@ -141,6 +120,8 @@ const vm = new Vue({
             // startDownLoad(allImagesSrc);
             fs.writeFileSync(`./imageArray.json`, JSON.stringify(allImagesSrc));
 
+            this.startDownLoad();
+
             function _createReturnFunction(image_id) {
                 var url = baseUrl + '/big.php?i=' + image_id;
                 return function() {
@@ -157,7 +138,6 @@ const vm = new Vue({
                     });
                 };
             }
-
         },
         async startDownLoad(allImagesSrc) {
             var url = 'https://images8.alphacoders.com/533/533772.jpg',
@@ -170,6 +150,10 @@ const vm = new Vue({
                 setting: {
                     callback: () => {
                         console.log(url);
+                        console.log(url);
+                        console.log(url);
+                        console.log(url);
+                        debugger
                     }
                 }
             });
