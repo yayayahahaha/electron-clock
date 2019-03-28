@@ -2,8 +2,12 @@ const fs = require('fs')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const _ = require('lodash')
-const { TaskSystem, download } = require('npm-flyc')
-const { ipcRenderer } = require('electron')
+const {
+    TaskSystem
+} = require('npm-flyc')
+const {
+    ipcRenderer
+} = require('electron')
 
 // const ipcRenderer // 似乎是electron 的內建東東
 
@@ -156,11 +160,18 @@ const vm = new Vue({
 
         },
         async startDownLoad(allImagesSrc) {
-            var url = 'https://images8.alphacoders.com/533/533772.jpg';
+            var url = 'https://images8.alphacoders.com/533/533772.jpg',
+                filePath = 'hello/new-folder/image.png';
+
             console.log(url);
             ipcRenderer.send('download', {
-                key: 'value',
-                flyc: 'this is custom argument testing'
+                url,
+                filePath,
+                setting: {
+                    callback: () => {
+                        console.log(url);
+                    }
+                }
             });
         },
     },
