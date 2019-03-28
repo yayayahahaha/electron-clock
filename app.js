@@ -3,6 +3,9 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const _ = require('lodash')
 
+var contents = fs.readFileSync('./imageArray.json'),
+    json = JSON.parse(contents);
+
 const vm = new Vue({
     el: '#app',
     data: {
@@ -96,6 +99,12 @@ const vm = new Vue({
             });
             task_search = new TaskSystem(taskArray, 32);
 
+            var response = json;
+            console.log(response);
+            return;
+
+            // for now 
+
             console.log('');
             var response = await task_search.doPromise(),
                 allImagesSrc = _.chain(response)
@@ -107,6 +116,7 @@ const vm = new Vue({
 
             this.imageList = [...allImagesSrc];
             // startDownLoad(allImagesSrc);
+            fs.writeFileSync(`./imageArray.json`, JSON.stringify(allImagesSrc));
 
             function _createReturnFunction(image_id) {
                 var url = baseUrl + '/big.php?i=' + image_id;
