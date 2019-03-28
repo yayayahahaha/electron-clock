@@ -101,9 +101,16 @@ const vm = new Vue({
 
             var response = json;
             console.log(response);
+
+            this.imageList = [...response].map((url) => {
+                return {
+                    name: url,
+                    url
+                };
+            });
             return;
 
-            // for now 
+            // for now
 
             console.log('');
             var response = await task_search.doPromise(),
@@ -114,7 +121,12 @@ const vm = new Vue({
                 .flattenDepth(1)
                 .value();
 
-            this.imageList = [...allImagesSrc];
+            this.imageList = [...allImagesSrc].map((url) => {
+                return {
+                    name: url,
+                    url
+                };
+            });
             // startDownLoad(allImagesSrc);
             fs.writeFileSync(`./imageArray.json`, JSON.stringify(allImagesSrc));
 
