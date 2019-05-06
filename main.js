@@ -1,7 +1,9 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    ipcMain
 } = require('electron')
+const { download } = require('npm-flyc')
 
 const path = require('path')
 const url = require('url')
@@ -42,4 +44,15 @@ function createWindow() {
     win.on('closed', () => {
         win = null
     })
+
+    ipcMain.on('download', (event, { url, filePath, setting }) => {
+
+        download(url, filePath, setting);
+
+        console.log(event);
+        console.log(typeof event);
+
+        console.log('=====================');
+    })
+
 }
